@@ -1,5 +1,4 @@
 // Binding pybind11: klasy z inc/ widoczne w Pythonie jako modul robot_ga._core.
-// Tylko tlumaczenie typow - cala logika algorytmu jest w src/.
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

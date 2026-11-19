@@ -7,9 +7,9 @@
 // domyslna kara za kazda jednostke dlugosci w przeszkodzie
 const double COLLISION_PENALTY = 100.0;
 
-// Funkcja celu (minimalizowana):
-//   value = dlugosc sciezki + penalty * dlugosc fragmentow w przeszkodach
-// robot_path to PELNA sciezka: start, punkty posrednie, cel.
+// funkcja celu:
+// value = dlugosc sciezki + penalty * dlugosc fragmentow w przeszkodach
+// robot_path to pelna sciezka: start, punkty posrednie, cel.
 class Goal_function {
 private:
     std::vector<Point> robot_path;

@@ -18,14 +18,22 @@ list(REMOVE_ITEM CORE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
 add_library(robot_ga_core STATIC ${CORE_SOURCES})
 target_include_directories(robot_ga_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inc)
-target_compile_options(robot_ga_core PRIVATE -Wall -Wextra)
+if(MSVC)
+    target_compile_options(robot_ga_core PRIVATE /W4)
+else()
+    target_compile_options(robot_ga_core PRIVATE -Wall -Wextra)
+endif()
 set_target_properties(robot_ga_core PROPERTIES POSITION_INDEPENDENT_CODE ON)   # trafia do .so
 
 # --- Program terminalowy ---
 if(ROBOT_GA_BUILD_EXE)
     add_executable(robot_ga src/main.cpp)
     target_link_libraries(robot_ga PRIVATE robot_ga_core)
-    target_compile_options(robot_ga PRIVATE -Wall -Wextra)
+    if(MSVC)
+        target_compile_options(robot_ga PRIVATE /W4)
+    else()
+        target_compile_options(robot_ga PRIVATE -Wall -Wextra)
+    endif()
 endif()
 
 # --- Modul Pythona: import robot_ga ---
@@ -42,6 +50,11 @@ if(ROBOT_GA_BUILD_PYTHON)
     else()
         # zwykle budowanie: modul laduje obok pakietu (PYTHONPATH=python)
         set_target_properties(_core PROPERTIES
-            LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/python/robot_ga)
+            LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/python/robot_ga
+            # generatory wieloconfigowe (Visual Studio) dokladaja podkatalog Release/Debug
+            LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/python/robot_ga
+            LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_SOURCE_DIR}/python/robot_ga
+            LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_CURRENT_SOURCE_DIR}/python/robot_ga
+            LIBRARY_OUTPUT_DIRECTORY_MINSIZEREL ${CMAKE_CURRENT_SOURCE_DIR}/python/robot_ga)
     endif()
 endif()

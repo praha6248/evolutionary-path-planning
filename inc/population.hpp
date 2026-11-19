@@ -6,9 +6,9 @@
 #include "goal_function.hpp"
 
 // Cykl ewolucyjny AG:
-//   populacja --SELEKCJA (ruletka)--> pula rodzicielska
-//   --OPERACJE GENETYCZNE (krzyzowanie + mutacja)--> potomkowie
-//   --funkcja celu--> stopien przystosowania --PODSTAWIENIE--> nowa populacja
+//   populacja --selekcja(ruletka)--> pula rodzicielska
+//   --operacje genetyczne (krzyzowanie + mutacja)--> potomkowie
+//   --funkcja celu--> stopien przystosowania --podstawienie--> nowa populacja
 //
 // Osobnik = wektor PUNKTOW POSREDNICH sciezki. Start i cel (robot_path)
 // sa wspolne dla wszystkich i dokleja sie je przy liczeniu funkcji celu.
