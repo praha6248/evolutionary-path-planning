@@ -3,6 +3,7 @@ project(robot_ga VERSION 0.1.0 LANGUAGES CXX)
 
 option(ROBOT_GA_BUILD_EXE    "Program robot_ga (src/main.cpp)"   ON)
 option(ROBOT_GA_BUILD_PYTHON "Modul Pythona robot_ga (pybind11)" ON)
+option(ROBOT_GA_BUILD_TESTS  "Unit tests (GoogleTest)"           OFF)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -57,4 +58,22 @@ if(ROBOT_GA_BUILD_PYTHON)
             LIBRARY_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_CURRENT_SOURCE_DIR}/python/robot_ga
             LIBRARY_OUTPUT_DIRECTORY_MINSIZEREL ${CMAKE_CURRENT_SOURCE_DIR}/python/robot_ga)
     endif()
+endif()
+
+# --- Unit tests: cmake -DROBOT_GA_BUILD_TESTS=ON, then ctest ---
+if(ROBOT_GA_BUILD_TESTS)
+    include(FetchContent)
+    FetchContent_Declare(googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG v1.15.2
+        GIT_SHALLOW TRUE)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+
+    enable_testing()
+    add_executable(robot_ga_tests tests/test_core.cpp)
+    target_link_libraries(robot_ga_tests PRIVATE robot_ga_core GTest::gtest_main)
+    include(GoogleTest)
+    gtest_discover_tests(robot_ga_tests)
 endif()

@@ -5,7 +5,7 @@ build-backend = "scikit_build_core.build"
 [project]
 name = "robot_ga"
 version = "0.1.0"
-description = "Algorytm ewolucyjny do planowania sciezki robota mobilnego (C++ + Python)"
+description = "Evolutionary algorithm for mobile robot path planning (C++ core, Python bindings)"
 requires-python = ">=3.8"
 dependencies = ["numpy", "matplotlib"]
 
